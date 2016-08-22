@@ -112,6 +112,7 @@ public class CaisseInterface extends JFrame {
 	public void sendTicketForPaiement(Ticket ticket) {
 		cardLayout.show(cardContainer, PAIEMENT_FACADE);
 		paimentPanel.payTicket(ticket);
+		System.err.println("dqsd");
 	}
 
 	public void getBackToCaissFacade() {
