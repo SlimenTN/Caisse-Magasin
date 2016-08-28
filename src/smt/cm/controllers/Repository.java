@@ -137,7 +137,7 @@ public class Repository<T> implements EntityRepository<T> {
 	@Override
 	public T findBy(String field, String value) {
 		String className = this.getClass().getSimpleName()
-				.replace("Repository", "");
+				.replace(REPO_NAME, "");
 		T obj = null;
 		Session session = HibernateUtil.sessionFactory.openSession();
 		Transaction tx = null;
