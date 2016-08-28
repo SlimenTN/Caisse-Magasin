@@ -3,7 +3,11 @@ package smt.cm.util;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import smt.cm.entities.Caisse;
+import smt.cm.entities.CaisseSession;
 import smt.cm.entities.CategoryProduct;
+import smt.cm.entities.Employee;
+import smt.cm.entities.OutgoCaisse;
 import smt.cm.entities.Product;
 import smt.cm.entities.Ticket;
 import smt.cm.entities.TicketLine;
@@ -18,6 +22,10 @@ public class HibernateUtil {
 					.addAnnotatedClass(CategoryProduct.class)
 					.addAnnotatedClass(Ticket.class)
 					.addAnnotatedClass(TicketLine.class)
+					.addAnnotatedClass(Caisse.class)
+					.addAnnotatedClass(Employee.class)
+					.addAnnotatedClass(CaisseSession.class)
+					.addAnnotatedClass(OutgoCaisse.class)
 					.buildSessionFactory();
 		} catch (Throwable ex) {
 			// Log exception!

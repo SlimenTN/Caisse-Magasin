@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -17,7 +18,8 @@ import javax.persistence.Table;
 @Table(name="ticket")
 public class Ticket {
 	
-	@Id @GeneratedValue
+	@Id 
+	@GeneratedValue
     @Column(name = "id")
 	private int id;
 	
@@ -35,6 +37,9 @@ public class Ticket {
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="ticket", fetch=FetchType.EAGER)
 	private Set<TicketLine> ticketLines = new HashSet<TicketLine>();
+	
+	@ManyToOne
+	private CaisseSession caisseSession;
 
 	public int getId() {
 		return id;
@@ -102,10 +107,19 @@ public class Ticket {
 		this.ticketLines = ticketLines;
 	}
 
+	public CaisseSession getCaisseSession() {
+		return caisseSession;
+	}
+
+	public void setCaisseSession(CaisseSession caisseSession) {
+		this.caisseSession = caisseSession;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((code == null) ? 0 : code.hashCode());
 		result = prime * result + id;
 		return result;
 	}
@@ -119,11 +133,19 @@ public class Ticket {
 		if (getClass() != obj.getClass())
 			return false;
 		Ticket other = (Ticket) obj;
+		if (code == null) {
+			if (other.code != null)
+				return false;
+		} else if (!code.equals(other.code))
+			return false;
 		if (id != other.id)
 			return false;
 		return true;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "Ticket [n°=" + code + "]";
+	}
+
 }	
