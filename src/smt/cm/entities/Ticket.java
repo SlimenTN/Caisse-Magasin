@@ -1,5 +1,6 @@
 package smt.cm.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,9 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="ticket")
-public class Ticket {
+public class Ticket implements Serializable{
 	
 	@Id 
 	@GeneratedValue
@@ -37,6 +39,9 @@ public class Ticket {
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="ticket", fetch=FetchType.EAGER)
 	private Set<TicketLine> ticketLines = new HashSet<TicketLine>();
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="ticket", fetch=FetchType.LAZY)
+	private Set<TicketHasModes> modes = new HashSet<TicketHasModes>();
 	
 	@ManyToOne
 	private CaisseSession caisseSession;
@@ -114,6 +119,16 @@ public class Ticket {
 	public void setCaisseSession(CaisseSession caisseSession) {
 		this.caisseSession = caisseSession;
 	}
+	
+	
+
+	public Set<TicketHasModes> getModes() {
+		return modes;
+	}
+
+	public void setModes(Set<TicketHasModes> modes) {
+		this.modes = modes;
+	}
 
 	@Override
 	public int hashCode() {
@@ -145,7 +160,9 @@ public class Ticket {
 
 	@Override
 	public String toString() {
-		return "Ticket [n°=" + code + "]";
+		return "Ticket [code=" + code + ", dateTicket=" + dateTicket + "]";
 	}
+
+
 
 }	

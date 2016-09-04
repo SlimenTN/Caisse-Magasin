@@ -1,5 +1,7 @@
 package smt.cm.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,9 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="ticket_line")
-public class TicketLine {
+public class TicketLine implements Serializable{
 	
 	@Id @GeneratedValue
     @Column(name = "id")
@@ -139,6 +142,14 @@ public class TicketLine {
 		} else if (!ticket.equals(other.ticket))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "TicketLine [id=" + id + ", product=" + product + ", ticket="
+				+ ticket + ", productPrice=" + productPrice + ", quantity="
+				+ quantity + ", remise=" + remise + ", linePrice=" + linePrice
+				+ "]";
 	}
 	
 	

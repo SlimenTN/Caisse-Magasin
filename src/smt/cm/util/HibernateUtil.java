@@ -7,9 +7,11 @@ import smt.cm.entities.Caisse;
 import smt.cm.entities.CaisseSession;
 import smt.cm.entities.CategoryProduct;
 import smt.cm.entities.Employee;
+import smt.cm.entities.ModeRegulation;
 import smt.cm.entities.OutgoCaisse;
 import smt.cm.entities.Product;
 import smt.cm.entities.Ticket;
+import smt.cm.entities.TicketHasModes;
 import smt.cm.entities.TicketLine;
 
 public class HibernateUtil {
@@ -26,6 +28,8 @@ public class HibernateUtil {
 					.addAnnotatedClass(Employee.class)
 					.addAnnotatedClass(CaisseSession.class)
 					.addAnnotatedClass(OutgoCaisse.class)
+					.addAnnotatedClass(ModeRegulation.class)
+					.addAnnotatedClass(TicketHasModes.class)
 					.buildSessionFactory();
 		} catch (Throwable ex) {
 			// Log exception!

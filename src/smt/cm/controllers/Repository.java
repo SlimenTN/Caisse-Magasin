@@ -25,7 +25,8 @@ public class Repository<T> implements EntityRepository<T> {
 			tx = session.beginTransaction();
 			idEntity = (Integer) session.save(obj);
 			tx.commit();
-		} catch (HibernateException e) {
+			
+		} catch (Exception e) {
 			if (tx != null)
 				tx.rollback();
 			e.printStackTrace();
@@ -90,23 +91,24 @@ public class Repository<T> implements EntityRepository<T> {
 			session.close();
 		}
 	}
-	
-	
+
 	/**
 	 * Check if connection still valid
+	 * 
 	 * @return
 	 */
-	public static boolean connectionIsValid(){
+	public static boolean connectionIsValid() {
 		boolean isValid = true;
 		Statement state;
 		try {
-			state = ((SessionImpl)HibernateUtil.sessionFactory.openSession().getDelegate()).connection().createStatement();
-			String sql = "SELECT 1";				   
+			state = ((SessionImpl) HibernateUtil.sessionFactory.openSession()
+					.getDelegate()).connection().createStatement();
+			String sql = "SELECT 1";
 			state.executeQuery(sql);
 
-    	} catch (Exception e){
-    		isValid = false;
-//    		e.printStackTrace();
+		} catch (Exception e) {
+			isValid = false;
+			// e.printStackTrace();
 		}
 		return isValid;
 	}
@@ -121,7 +123,8 @@ public class Repository<T> implements EntityRepository<T> {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			obj = (T) session.get(Class.forName(ENTITIES_PACKAGE+"."+className), id);
+			obj = (T) session.get(
+					Class.forName(ENTITIES_PACKAGE + "." + className), id);
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null)
@@ -143,7 +146,10 @@ public class Repository<T> implements EntityRepository<T> {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			obj = (T) session.createCriteria(Class.forName(ENTITIES_PACKAGE+"."+className)).add(Restrictions.eq(field, value)).uniqueResult();
+			obj = (T) session
+					.createCriteria(
+							Class.forName(ENTITIES_PACKAGE + "." + className))
+					.add(Restrictions.eq(field, value)).uniqueResult();
 			tx.commit();
 		} catch (Exception e) {
 			if (tx != null)

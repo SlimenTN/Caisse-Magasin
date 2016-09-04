@@ -159,7 +159,7 @@ public class CaisseInterface extends JFrame {
 	private void initData() {
 		products = productRepository.read();
 		productsContainer.initListProductsAndCategories(products);
-
+		paimentPanel.initRegulationModes();
 	}
 
 	/**
@@ -304,12 +304,17 @@ public class CaisseInterface extends JFrame {
 	 * Close caisse
 	 */
 	public void closeCaisse() {
-		int res = JOptionPane.showConfirmDialog(this, "Confirmez-vous la cloture de cette caisse ?", "Clotuer Caisse", JOptionPane.ERROR_MESSAGE);
+		int res = JOptionPane.showConfirmDialog(this, "Confirmez-vous la clôture de cette caisse ?", "Clôtuer Caisse", JOptionPane.ERROR_MESSAGE);
 		if(res == JOptionPane.YES_OPTION){
 			CAISSE_SESSION.setCloseDate(new Date());
 			CAISSE_SESSION.getCaisse().setStat(AppConst.CAISSE_CLOSED);
 			caisseSessionRepository.update(CAISSE_SESSION);
+			caisseRepository.update(CAISSE_SESSION.getCaisse());
 			System.exit(0);
 		}
+	}
+
+	public void focusBarcodeField() {
+		productsContainer.focusBarcodeField();
 	}
 }
